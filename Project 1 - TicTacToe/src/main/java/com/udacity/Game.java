@@ -150,8 +150,55 @@ public class Game {
      */
     public String checkGameWinner(char [][]grid){
         String result = "None";
+        if(this.wins('x', grid)) {
+            result = "x wins";
+        }
+        if(this.wins('o', grid)) {
+            result = "o wins";
+        }
+        if(this.tie(grid)) {
+            result = "tie";
+        }
+        if(this.nowin(grid)) {
+            result = "tie";
+        }
         //Student code goes here ...
         return result;
+    }
+
+    public boolean wins(char sign,char [][]grid) {
+        return
+                (grid[0][0]==sign && grid[0][1] == sign && grid[0][2] == sign)
+                 || (grid[0][0]==sign && grid[1][0] == sign && grid[2][0] == sign)
+                 || (grid[1][0]==sign && grid[1][1] == sign && grid[1][2] == sign)
+                 || (grid[0][1]==sign && grid[1][1] == sign && grid[2][1] == sign)
+                 || (grid[2][0]==sign && grid[2][1] == sign && grid[2][2] == sign)
+                 || (grid[2][2]==sign && grid[1][2] == sign && grid[0][2] == sign)
+                 || (grid[0][0]==sign && grid[1][1] == sign && grid[2][2] == sign)
+                 || (grid[0][2]==sign && grid[1][1] == sign && grid[2][0] == sign)
+                ;
+    }
+    public boolean tie(char [][]grid) {
+        int singnsCount = 0;
+        for (int i = 0; i<grid.length;i++) {
+            for (int j = 0; j<grid.length;j++) {
+                if(grid[i][j] == 'x' || grid[i][j] == 'o' ){
+                    singnsCount++;
+                }
+            }
+        }
+        return singnsCount>7 && wins('o', grid) && wins('x', grid);
+    }
+    public boolean nowin(char [][]grid) {
+        int singnsCount = 0;
+        for (int i = 0; i<grid.length;i++) {
+            for (int j = 0; j<grid.length;j++) {
+                if(grid[i][j] == 'x' || grid[i][j] == 'o' ){
+                    singnsCount++;
+                }
+            }
+        }
+        return singnsCount ==9 && !wins('o', grid) && !wins('x', grid);
     }
 
     /**
